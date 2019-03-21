@@ -1,0 +1,4 @@
+*.so
+*.c
+*.idx
+__pycache__
