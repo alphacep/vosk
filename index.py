@@ -6,16 +6,9 @@ import numpy
 import phash
 import pickle
 
-numpy.set_printoptions(threshold=sys.maxsize)
 
-try:
-    inf = open(sys.argv[3], "rb")
-    database = pickle.load(inf)
-except:
-    database = {}
-
-def get_hash(utt, start, end):
-     y, sr = librosa.load(wavs[utt], sr=16000)
+def get_hash(wavfn, start, end):
+     y, sr = librosa.load(wavfn, sr=16000)
      y = y[int(start * sr):int(end * sr)]
      # Get the hop size so we get about 50 frames
 
@@ -24,39 +17,58 @@ def get_hash(utt, start, end):
      h = phash.hash(S)
      return h
 
-wavs = {}
-for line in open(sys.argv[1]):
-    items = line.split()
-    wavs[items[0]] = items[1]
+class Segment():
+    def __init__(self, utt, start, dur, name):
+        self.utt = utt
+        self.start = float(start)
+        self.dur = float(dur)
+        self.name = name
 
-phones={}
-for line in open(sys.argv[2]):
-    utt, channel, start, dur, pn = line.split()
-    if utt not in phones:
-        phones[utt] = []
-    phones[utt].append((utt, pn, float(start), float(dur)))
+    def __repr__(self):
+        return "[%s %s %.3f %.3f]" % (self.utt, self.name, self.start, self.dur)
 
-for utt in phones:
-    utt_phones = phones[utt]
-    for i, phone in enumerate(utt_phones):
-        _, pn, start, dur = phone
-        # End should be approximately + 0.5 seconds from start
-        j = i
-        end = start
-        while end < start + 0.5 and j < len(utt_phones):
-             end = end + utt_phones[j][3]
-             j = j + 1
-        if j - i < 3 or end - start < 0.4: # Ignore this
-             continue
-        mhash = get_hash(utt, start, end)
+def SegmentGenerator(wav_list, phone_list):
+    wavs = {}
+    for line in open(wav_list):
+        items = line.split()
+        wavs[items[0]] = items[1]
+
+    segments={}
+    for line in open(phone_list):
+        utt, channel, start, dur, pn = line.split()
+        if utt not in segments:
+            segments[utt] = []
+        segments[utt].append(Segment(utt, start, dur, pn))
+
+    for utt in segments:
+        utt_segments = segments[utt]
+        for i, phone in enumerate(utt_segments):
+            # End should be approximately + 0.5 seconds from start
+            j = i
+            end = phone.start
+            while end < phone.start + 0.5 and j < len(utt_segments):
+                end = end + utt_segments[j].dur
+                j = j + 1
+            if j - i < 3 or end - phone.start < 0.4: # Ignore this
+                continue
+
+            mhash = get_hash(wavs[utt], phone.start, end)
+            yield (mhash, start, end, utt_segments[i:j + 1])
+
+
+def index_data():
+    try:
+        inf = open(sys.argv[3], "rb")
+        database = pickle.load(inf)
+    except:
+        database = {}
+
+    for mhash, start, end, segments in SegmentGenerator(sys.argv[1], sys.argv[2]):
         if mhash not in database:
             database[mhash] = []
-        database[mhash].append((utt_phones[i:j + 1], start, end))
+        print (mhash, start, end, segments)
+        database[mhash].append((segments, start, end))
+    pickle.dump(database, open(sys.argv[3], "wb"))
 
-#for k in database:
-#    if len(database[k]) > 1:
-#         print (k, database[k])
-#         for x in database[k]:
-#             print (" ".join([y[1] for y in x[0]]))
-
-pickle.dump(database, open(sys.argv[3], "wb"))
+if __name__ == '__main__':
+    index_data()
