@@ -45,14 +45,15 @@ def SegmentGenerator(wav_list, phone_list):
         for i, phone in enumerate(utt_segments):
             # End should be approximately + 0.5 seconds from start
             j = i
+            start = phone.start
             end = phone.start
-            while end < phone.start + 0.5 and j < len(utt_segments):
+            while end < start + 0.5 and j < len(utt_segments):
                 end = end + utt_segments[j].dur
                 j = j + 1
-            if j - i < 3 or end - phone.start < 0.4: # Ignore this
+            if j - i < 3 or end - start < 0.4: # Ignore this
                 continue
 
-            mhash = get_hash(wavs[utt], phone.start, end)
+            mhash = get_hash(wavs[utt], start, end)
             yield (mhash, start, end, utt_segments[i:j + 1])
 
 
@@ -66,7 +67,7 @@ def index_data():
     for mhash, start, end, segments in SegmentGenerator(sys.argv[1], sys.argv[2]):
         if mhash not in database:
             database[mhash] = []
-        print (mhash, start, end, segments)
+#        print (mhash, start, end, segments)
         database[mhash].append((segments, start, end))
     pickle.dump(database, open(sys.argv[3], "wb"))
 
