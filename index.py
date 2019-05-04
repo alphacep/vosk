@@ -7,13 +7,18 @@ import phash
 import pickle
 
 
-def get_hash(wavfn, start, end):
+def get_hash(mel_basis, wavfn, start, end):
      y, sr = librosa.load(wavfn, sr=16000)
      y = y[int(start * sr):int(end * sr)]
      # Get the hop size so we get about 50 frames
 
      hop = int(y.shape[0] / 64) + 1
-     S = librosa.power_to_db(librosa.feature.melspectrogram(y=y, sr=sr, n_mels=32, fmax=8000, n_fft=512, hop_length=hop), ref=numpy.max)
+
+     S, n_fft = librosa.core.spectrum._spectrogram(y=y, n_fft=512, hop_length=hop, power=2.0)
+
+
+
+     S = librosa.power_to_db(numpy.dot(mel_basis, S), ref=numpy.max)
      h = phash.hash(S)
      return h
 
@@ -40,6 +45,9 @@ def SegmentGenerator(wav_list, phone_list):
             segments[utt] = []
         segments[utt].append(Segment(utt, start, dur, pn))
 
+    # Build a Mel filter
+    mel_basis = librosa.filters.mel(16000, n_fft=512, n_mels=32)
+
     for utt in segments:
         utt_segments = segments[utt]
         for i, phone in enumerate(utt_segments):
@@ -53,7 +61,7 @@ def SegmentGenerator(wav_list, phone_list):
             if j - i < 3 or end - start < 0.4: # Ignore this
                 continue
 
-            mhash = get_hash(wavs[utt], start, end)
+            mhash = get_hash(mel_basis, wavs[utt], start, end)
             yield (mhash, start, end, utt_segments[i:j + 1])
 
 
