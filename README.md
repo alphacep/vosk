@@ -78,3 +78,11 @@ python3 verify.py wavs-test.txt phones-test.txt data.idx
 The tool will search for segments in the index and report suspicious
 segments which you can additionally check and later add to the database
 to improve the accuracy of recognition.
+
+### Related papers and links
+
+
+ - [VOSK prsentation (in Russian)](https://www.youtube.com/watch?v=gsOMU1UTF7s) Intro presentation from NSU
+ - [Memory, Modularity, and the Theory of Deep Learnability. Google Tech Talk by Rina Panigrahy](https://www.youtube.com/watch?v=bP5oyH_5nMU) shows importance of memory for learning compmlex functions.
+ - [Large Language Models in Machine Translation by Thorsten Brants at al.](https://aclweb.org/anthology/D07-1090.pdf) Google's paper on simple backoff terascale LM.
+
