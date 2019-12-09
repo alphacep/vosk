@@ -86,3 +86,4 @@ to improve the accuracy of recognition.
  - [Memory, Modularity, and the Theory of Deep Learnability. Google Tech Talk by Rina Panigrahy](https://www.youtube.com/watch?v=bP5oyH_5nMU) shows importance of memory for learning complex functions.
  - [Large Language Models in Machine Translation by Thorsten Brants at al.](https://aclweb.org/anthology/D07-1090.pdf) Google's paper on simple backoff terascale LM.
  - [Deep Learning of Binary Hash Codes for Fast Image Retrieval by Kevin Lin at al.](https://www.iis.sinica.edu.tw/~kevinlin311.tw/cvprw15.pdf) a nice deephash [implementation](https://github.com/flyingpot/pytorch_deephash)
+ - [Episodic Memory in Lifelong Language Learning](https://arxiv.org/pdf/1906.01076.pdf)
