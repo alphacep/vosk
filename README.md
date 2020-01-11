@@ -1,3 +1,5 @@
+# For Kaldi API for Android and Linux please see [Vosk API](https://github.com/alphacep/vosk-api). This is a server project.
+
 This is Vosk, the lifelong speech recognition system.
 
 ## Concepts
