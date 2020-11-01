@@ -90,3 +90,4 @@ to improve the accuracy of recognition.
  - [Episodic Memory in Lifelong Language Learning](https://arxiv.org/pdf/1906.01076.pdf)
  - [Extreme Classification in Log Memory using Count-Min Sketch: A Case Study of Amazon Search with 50M Products](https://arxiv.org/abs/1910.13830)
  - [On-device Supermarket Product Recognition](https://ai.googleblog.com/2020/07/on-device-supermarket-product.html) Google's good example of kNN for mobile search
+ - [Hash-Routed Neural Networks](https://github.com/ma3oun/hrn) Great idea and solid math
