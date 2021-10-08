@@ -92,3 +92,4 @@ to improve the accuracy of recognition.
  - [On-device Supermarket Product Recognition](https://ai.googleblog.com/2020/07/on-device-supermarket-product.html) Google's good example of kNN for mobile search
  - [Hash-Routed Neural Networks](https://github.com/ma3oun/hrn) Great idea and solid math
  - [Towards Lifelong Learning of End-to-end ASR](https://arxiv.org/pdf/2104.01616.pdf) Methods get more publicity
+ - [Building Scalable, Explainable, and Adaptive NLP Models with Retrieval](http://ai.stanford.edu/blog/retrieval-based-NLP)
