@@ -94,3 +94,4 @@ to improve the accuracy of recognition.
  - [Towards Lifelong Learning of End-to-end ASR](https://arxiv.org/pdf/2104.01616.pdf) Methods get more publicity
  - [Building Scalable, Explainable, and Adaptive NLP Models with Retrieval](http://ai.stanford.edu/blog/retrieval-based-NLP)
  - [Continual Learning for Monolingual End-to-End Automatic Speech Recognition](https://arxiv.org/abs/2112.09427)
+ - [Mammoth - An Extendible (General) Continual Learning Framework for Pytorch](https://github.com/aimagelab/mammoth)
