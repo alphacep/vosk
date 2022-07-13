@@ -96,3 +96,4 @@ to improve the accuracy of recognition.
  - [Continual Learning for Monolingual End-to-End Automatic Speech Recognition](https://arxiv.org/abs/2112.09427)
  - [Mammoth - An Extendible (General) Continual Learning Framework for Pytorch](https://github.com/aimagelab/mammoth)
  - [Progressive Continual Learning for Spoken Keyword Spotting](https://arxiv.org/abs/2201.12546)
+ - [Online Continual Learning of End-to-End Speech Recognition Models](https://arxiv.org/abs/2207.05071)
